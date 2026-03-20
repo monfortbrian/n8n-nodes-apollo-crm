@@ -3,11 +3,11 @@
 # Auto-publishes to npm when you push a version tag (e.g. v1.0.0).
 #
 # SETUP (one-time):
-# 1. Go to npmjs.com → your account → Packages → n8n-nodes-apollo
+# 1. Go to npmjs.com → your account → Packages → n8n-nodes-apollo-crm
 # 2. Access → Publish access → Trusted Publishers
 # 3. Add publisher:
 #    - Owner:      monfortbrian
-#    - Repository: n8n-nodes-apollo
+#    - Repository: n8n-nodes-apollo-crm
 #    - Workflow:   publish.yml
 # No npm token needed - uses GitHub OIDC.
 #

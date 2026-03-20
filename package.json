@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-apollo-io",
+  "name": "n8n-nodes-apollo-crm",
   "version": "1.0.0",
   "description": "n8n community node for Apollo.io, sales intelligence, prospecting, data enrichment, sequences, deals, tasks, and calls",
   "keywords": [
@@ -17,17 +17,17 @@
     "sequences"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/monfortbrian/n8n-nodes-apollo",
+  "homepage": "https://github.com/monfortbrian/n8n-nodes-apollo-crm",
   "author": {
     "name": "Monfort Brian N.",
     "email": "monfortnkurunziza0@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/monfortbrian/n8n-nodes-apollo.git"
+    "url": "git+https://github.com/monfortbrian/n8n-nodes-apollo-crm.git"
   },
   "bugs": {
-    "url": "https://github.com/monfortbrian/n8n-nodes-apollo/issues"
+    "url": "https://github.com/monfortbrian/n8n-nodes-apollo-crm/issues"
   },
   "main": "dist/index.js",
   "scripts": {

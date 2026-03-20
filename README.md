@@ -1,7 +1,7 @@
-# n8n-nodes-apollo
+# n8n-nodes-apollo-crm
 
-[![npm version](https://badge.fury.io/js/n8n-nodes-apollo.svg)](https://www.npmjs.com/package/n8n-nodes-apollo)
-[![npm downloads](https://img.shields.io/npm/dt/n8n-nodes-apollo.svg)](https://www.npmjs.com/package/n8n-nodes-apollo)
+[![npm version](https://badge.fury.io/js/n8n-nodes-apollo-crm.svg)](https://www.npmjs.com/package/n8n-nodes-apollo-crm)
+[![npm downloads](https://img.shields.io/npm/dt/n8n-nodes-apollo-crm.svg)](https://www.npmjs.com/package/n8n-nodes-apollo-crm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 
 Community node for n8n providing full **Apollo.io** integration - sales intelligence, prospect search, data enrichment, CRM, outreach sequences, deals, tasks, and call logging.
@@ -118,13 +118,13 @@ Apollo.io is trusted by 500,000+ companies including Autodesk and DocuSign. It p
 1. Open n8n
 2. Go to **Settings → Community Nodes**
 3. Click **Install a community node**
-4. Enter: `n8n-nodes-apollo`
+4. Enter: `n8n-nodes-apollo-crm`
 5. Click **Install**
 
 ### Via npm
 
 ```bash
-npm install n8n-nodes-apollo
+npm install n8n-nodes-apollo-crm
 ```
 
 ### Via verified node
@@ -267,7 +267,7 @@ People Search and Organization Search do **not** consume credits.
 
 ```bash
 # Verify installation
-npm list -g n8n-nodes-apollo
+npm list -g n8n-nodes-apollo-crm
 
 # Clear n8n cache and restart
 rm -rf ~/.n8n/cache
@@ -334,8 +334,8 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## Support
 
-- **Issues:** [GitHub Issues](https://github.com/monfortbrian/n8n-nodes-apollo/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/monfortbrian/n8n-nodes-apollo/discussions)
+- **Issues:** [GitHub Issues](https://github.com/monfortbrian/n8n-nodes-apollo-crm/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/monfortbrian/n8n-nodes-apollo-crm/discussions)
 - **n8n Community:** [community.n8n.io](https://community.n8n.io)
 
 ---
