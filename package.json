@@ -1,0 +1,70 @@
+{
+  "name": "n8n-nodes-apollo",
+  "version": "1.0.0",
+  "description": "n8n community node for Apollo.io, sales intelligence, prospecting, data enrichment, sequences, deals, tasks, and calls",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "apollo",
+    "apollo.io",
+    "sales",
+    "crm",
+    "prospecting",
+    "enrichment",
+    "lead-generation",
+    "sales-intelligence",
+    "outreach",
+    "sequences"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/monfortbrian/n8n-nodes-apollo",
+  "author": {
+    "name": "Monfort Brian N.",
+    "email": "monfortnkurunziza0@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monfortbrian/n8n-nodes-apollo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/monfortbrian/n8n-nodes-apollo/issues"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "build:watch": "n8n-node build --watch",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "format": "prettier nodes credentials --write",
+    "prepublishOnly": "npm run build && npm run lint"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md",
+    "CHANGELOG.md"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/ApolloApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Apollo/Apollo.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "*",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "9.32.0",
+    "prettier": "^3.3.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
