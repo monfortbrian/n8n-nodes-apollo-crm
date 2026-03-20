@@ -1,7 +1,7 @@
 # n8n-nodes-apollo
 
 [![npm version](https://badge.fury.io/js/n8n-nodes-apollo.svg)](https://www.npmjs.com/package/n8n-nodes-apollo)
-[![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-apollo.svg)](https://www.npmjs.com/package/n8n-nodes-apollo)
+[![npm downloads](https://img.shields.io/npm/dt/n8n-nodes-apollo.svg)](https://www.npmjs.com/package/n8n-nodes-apollo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 
 Community node for n8n providing full **Apollo.io** integration - sales intelligence, prospect search, data enrichment, CRM, outreach sequences, deals, tasks, and call logging.

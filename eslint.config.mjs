@@ -1,12 +1,3 @@
-import { defineConfig } from 'eslint/config';
-import n8nNodesBase from 'eslint-plugin-n8n-nodes-base';
+import { config } from '@n8n/node-cli/eslint';
 
-export default defineConfig([
-  {
-    plugins: { 'n8n-nodes-base': n8nNodesBase },
-    rules: {
-      ...n8nNodesBase.configs.nodes.rules,
-      ...n8nNodesBase.configs.credentials.rules,
-    },
-  },
-]);
+export default config;

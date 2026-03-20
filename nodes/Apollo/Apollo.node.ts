@@ -1,6 +1,7 @@
 import {
 	IDataObject,
 	IExecuteFunctions,
+	IHttpRequestOptions,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
@@ -17,6 +18,7 @@ export class Apollo implements INodeType {
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description:
 			'Interact with Apollo.io - sales intelligence, prospecting, data enrichment, CRM, outreach sequences, deals, tasks, and calls',
+		usableAsTool: true,
 		defaults: { name: 'Apollo' },
 		inputs: ['main'],
 		outputs: ['main'],
@@ -86,12 +88,6 @@ export class Apollo implements INodeType {
 						action: 'Search for accounts',
 					},
 					{
-						name: 'Update an Account',
-						value: 'updateAccount',
-						description: 'Update an existing company account record',
-						action: 'Update an account',
-					},
-					{
 						name: 'Update Account Owner',
 						value: 'updateAccountOwner',
 						description: 'Reassign one or more accounts to a new owner',
@@ -102,6 +98,12 @@ export class Apollo implements INodeType {
 						value: 'updateAccountStage',
 						description: 'Move one or more accounts to a different stage',
 						action: 'Update account stage',
+					},
+					{
+						name: 'Update an Account',
+						value: 'updateAccount',
+						description: 'Update an existing company account record',
+						action: 'Update an account',
 					},
 					{
 						name: 'View an Account',
@@ -493,12 +495,65 @@ export class Apollo implements INodeType {
 				displayOptions: { show: { resource: ['people'], operation: ['searchPeople'] } },
 				options: [
 					{
+						displayName: 'Company Domains',
+						name: 'qOrganizationDomains',
+						type: 'string',
+						default: '',
+						placeholder: 'apollo.io, salesforce.com',
+						description: 'Comma-separated company domains',
+					},
+					{
+						displayName: 'Has Email',
+						name: 'hasEmail',
+						type: 'boolean',
+						default: false,
+						description: 'Whether to only return people with a verified email address',
+					},
+					{
+						displayName: 'Has Phone',
+						name: 'hasPhone',
+						type: 'boolean',
+						default: false,
+						description: 'Whether to only return people with a phone number',
+					},
+					{
 						displayName: 'Job Titles',
 						name: 'personTitles',
 						type: 'string',
 						default: '',
 						placeholder: 'CEO, CTO, Founder',
 						description: 'Comma-separated job titles to filter by',
+					},
+					{
+						displayName: 'Keywords',
+						name: 'qKeywords',
+						type: 'string',
+						default: '',
+						description: 'Free-text keyword search across all fields',
+					},
+
+					{
+						displayName: 'Locations',
+						name: 'personLocations',
+						type: 'string',
+						default: '',
+						placeholder: 'San Francisco, CA, USA',
+						description: 'Comma-separated locations',
+					},
+					{
+						displayName: 'Max Employees',
+						name: 'employeesMax',
+						type: 'number',
+						default: 0,
+						description: 'Maximum number of company employees (0 = no limit)',
+					},
+
+					{
+						displayName: 'Min Employees',
+						name: 'employeesMin',
+						type: 'number',
+						default: 0,
+						description: 'Minimum number of company employees',
 					},
 					{
 						displayName: 'Seniority',
@@ -519,57 +574,9 @@ export class Apollo implements INodeType {
 						default: [],
 						description: 'Seniority levels to include in results',
 					},
-					{
-						displayName: 'Company Domains',
-						name: 'qOrganizationDomains',
-						type: 'string',
-						default: '',
-						placeholder: 'apollo.io, salesforce.com',
-						description: 'Comma-separated company domains',
-					},
-					{
-						displayName: 'Locations',
-						name: 'personLocations',
-						type: 'string',
-						default: '',
-						placeholder: 'San Francisco, CA, USA',
-						description: 'Comma-separated locations',
-					},
-					{
-						displayName: 'Keywords',
-						name: 'qKeywords',
-						type: 'string',
-						default: '',
-						description: 'Free-text keyword search across all fields',
-					},
-					{
-						displayName: 'Min Employees',
-						name: 'employeesMin',
-						type: 'number',
-						default: 0,
-						description: 'Minimum number of company employees',
-					},
-					{
-						displayName: 'Max Employees',
-						name: 'employeesMax',
-						type: 'number',
-						default: 0,
-						description: 'Maximum number of company employees (0 = no limit)',
-					},
-					{
-						displayName: 'Has Email',
-						name: 'hasEmail',
-						type: 'boolean',
-						default: false,
-						description: 'Whether to only return people with a verified email address',
-					},
-					{
-						displayName: 'Has Phone',
-						name: 'hasPhone',
-						type: 'boolean',
-						default: false,
-						description: 'Whether to only return people with a phone number',
-					},
+
+
+
 				],
 			},
 
@@ -611,6 +618,13 @@ export class Apollo implements INodeType {
 				displayOptions: { show: { resource: ['enrichment'], operation: ['enrichPerson'] } },
 				options: [
 					{
+						displayName: 'Company Domain',
+						name: 'domain',
+						type: 'string',
+						default: '',
+						placeholder: 'apollo.io',
+					},
+					{
 						displayName: 'First Name',
 						name: 'firstName',
 						type: 'string',
@@ -622,13 +636,7 @@ export class Apollo implements INodeType {
 						type: 'string',
 						default: '',
 					},
-					{
-						displayName: 'Company Domain',
-						name: 'domain',
-						type: 'string',
-						default: '',
-						placeholder: 'apollo.io',
-					},
+
 					{
 						displayName: 'LinkedIn URL',
 						name: 'linkedinUrl',
@@ -1164,15 +1172,8 @@ export class Apollo implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
-		const credentials = await this.getCredentials('apolloApi');
-		const apiKey = credentials.apiKey as string;
 
 		const BASE = 'https://api.apollo.io';
-		const headers: IDataObject = {
-			'X-Api-Key': apiKey,
-			'Content-Type': 'application/json',
-			'Cache-Control': 'no-cache',
-		};
 
 		for (let i = 0; i < items.length; i++) {
 			const resource = this.getNodeParameter('resource', i) as string;
@@ -1486,20 +1487,18 @@ export class Apollo implements INodeType {
 				}
 
 				// ── HTTP REQUEST ──────────────────────────────────────────────
-				const options: {
-					method: typeof method;
-					url: string;
-					baseURL: string;
-					headers: IDataObject;
-					body?: IDataObject;
-					qs?: IDataObject;
-					json?: boolean;
-				} = { method, url, baseURL: BASE, headers, json: true };
+			const options: IHttpRequestOptions = {
+				method,
+				url,
+				baseURL: BASE,
+				json: true,
+			};
 
-				if (Object.keys(body).length) options.body = body;
-				if (Object.keys(qs).length) options.qs = qs;
+			if (Object.keys(body).length) options.body = body;
+			if (Object.keys(qs).length) options.qs = qs;
 
-				const response = await this.helpers.httpRequest(options);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const response = await (this.helpers as any).httpRequestWithAuthentication('apolloApi', options);
 
 				returnData.push({
 					json: response as IDataObject,
