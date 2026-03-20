@@ -1,0 +1,11 @@
+credentials/**/*.ts
+nodes/**/*.ts
+index.ts
+tsconfig.json
+eslint.config.mjs
+.prettierrc.js
+.gitignore
+.vscode/
+.github/
+node_modules/
+**/*.map
