@@ -1,0 +1,54 @@
+# .github/workflows/publish.yml
+#
+# Auto-publishes to npm when you push a version tag (e.g. v1.0.0).
+#
+# SETUP (one-time):
+# 1. Go to npmjs.com → your account → Packages → n8n-nodes-apollo
+# 2. Access → Publish access → Trusted Publishers
+# 3. Add publisher:
+#    - Owner:      monfortbrian
+#    - Repository: n8n-nodes-apollo
+#    - Workflow:   publish.yml
+# No npm token needed - uses GitHub OIDC.
+#
+# TO RELEASE: run `npm run release` locally
+# This bumps version, updates CHANGELOG, commits, tags, and pushes.
+# The push triggers this workflow automatically.
+
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for npm provenance
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Publish
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
